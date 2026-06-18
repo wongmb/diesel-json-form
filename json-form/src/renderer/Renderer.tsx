@@ -524,6 +524,15 @@ interface ViewStringWithComboProps extends ViewValueProps<JvString> {
 
 function ViewStringWithCombo(p: ViewStringWithComboProps): React.ReactElement {
   const { t } = p.model;
+
+  // Set default value to first enum option if current value is empty
+  if (p.value.value === '' && p.proposals.length > 0) {
+    dispatchUpdateProperty(p, {
+      tag: 'jv-string',
+      value: p.proposals[0],
+    });
+  }
+
   return (
     <ComboBox
       id={'input-' + p.path.format('_') + p.instanceId}
